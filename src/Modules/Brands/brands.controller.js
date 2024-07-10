@@ -13,13 +13,13 @@ const addBrand = catchError(async (req, res) => {
 const allBrands = catchError(async (req, res, next) => {
   let brands = await Brand.find();
   brands.length === 0
-    ? next(new AppError("There is no subCategories", 404))
+    ? next(new AppError("There is no Brands", 404))
     : res.status(200).json({ message: "Success", brands });
 });
 
 const getBrand = catchError(async (req, res, next) => {
   let brand = await Brand.findById(req.params.id);
-  brand || next(new AppError("There is no subCategory with this ID", 404));
+  brand || next(new AppError("There is no Brand with this ID", 404));
   !brand || res.status(200).json({ message: "Success", brand });
 });
 
@@ -28,13 +28,13 @@ const updateBrand = catchError(async (req, res, next) => {
   let brand = await Brand.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
-  brand || next(new AppError("There is no subCategory with this ID", 404));
+  brand || next(new AppError("There is no Brand with this ID", 404));
   !brand || res.status(200).json({ message: "Success", brand });
 });
 
 const deleteBrand = catchError(async (req, res, next) => {
   let brand = await Brand.findByIdAndDelete(req.params.id);
-  brand || next(new AppError("There is no subCategory with this ID", 404));
+  brand || next(new AppError("There is no Brand with this ID", 404));
   !brand || res.status(200).json({ message: "Success", brand });
 });
 
