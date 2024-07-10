@@ -6,11 +6,19 @@ import {
   getSubCategory,
   updateSubCategory,
 } from "./subCategory.controller.js";
+import {
+  checkSubcategoryExist,
+  checkSubcategoryIdExist,
+} from "../../Middlewares/subCategory.middleware.js";
 
 const subCategoryRouter = Router();
 
-subCategoryRouter.route("/").post(addSubCategory).get(allSubCategories);
+subCategoryRouter
+  .route("/")
+  .post(addSubCategory)
+  .get(checkSubcategoryExist, allSubCategories);
 
+subCategoryRouter.use(checkSubcategoryIdExist);
 subCategoryRouter
   .route("/:id")
   .get(getSubCategory)
