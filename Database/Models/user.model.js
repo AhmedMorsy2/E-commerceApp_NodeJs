@@ -4,10 +4,7 @@ const schema = new Schema(
   {
     name: {
       type: String,
-      unique: [true, "name is required"],
       required: true,
-      trim: true,
-      minLength: [2, "too short username"],
     },
     email: {
       type: String,
@@ -22,7 +19,7 @@ const schema = new Schema(
       default: false,
     },
     consfirmEmail: {
-      type: boolean,
+      type: Boolean,
       default: false,
     },
     role: {
