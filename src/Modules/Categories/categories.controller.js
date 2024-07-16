@@ -1,6 +1,8 @@
 import slugify from "slugify";
 import { Category } from "../../../Database/Models/category.model.js";
 import { catchError } from "../../utils/catchError.js";
+import { ApiFeature } from "../../utils/ApiFeatures.js";
+import { AppError } from "../../utils/appError.js";
 
 const addCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);
@@ -12,10 +14,21 @@ const addCategory = catchError(async (req, res) => {
 });
 
 const allCategories = catchError(async (req, res, next) => {
-  let categories = await Category.find();
-  categories.length === 0
-    ? next(new AppError("There is no Categories", 404))
-    : res.status(200).json({ message: "Success", categories });
+  let apiFeatures = new ApiFeature(Category.find(), req.query)
+    .pagination()
+    .sort()
+    .filter();
+  let categories = await apiFeatures.mongooseQuery;
+
+  res.status(200).json({
+    message: "success",
+    MetaData: {
+      Page: apiFeatures.pageNumber,
+      limit: apiFeatures.limit,
+      total: categories.length,
+    },
+    categories,
+  });
 });
 
 const getCategory = catchError(async (req, res, next) => {

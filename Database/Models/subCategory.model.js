@@ -4,7 +4,7 @@ const schema = new Schema(
   {
     name: {
       type: String,
-      unique: [true, "name is required"],
+      unique: [true, "name must be unique"],
       required: true,
       trim: true,
       minLength: [2, "too short subCategory name"],
