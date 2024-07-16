@@ -1,5 +1,4 @@
 import slugify from "slugify";
-import { AppError } from "../../utils/appError.js";
 import { catchError } from "../../utils/catchError.js";
 import { Brand } from "../../../Database/Models/brand.model.js";
 
@@ -11,13 +10,16 @@ const addBrand = catchError(async (req, res) => {
 });
 
 const allBrands = catchError(async (req, res, next) => {
-  let brands = await Brand.find();
-  res.status(200).json({ message: "Success", brands });
+  let brand = await Brand.find();
+  brand.length === 0
+    ? next(new AppError("There is no Brands", 404))
+    : res.status(200).json({ message: "Success", brand });
 });
 
 const getBrand = catchError(async (req, res, next) => {
   let brand = await Brand.findById(req.params.id);
-  res.status(200).json({ message: "Success", brand });
+  brand || next(new AppError("Brand not found", 404));
+  !brand || res.status(200).json({ message: "Success", brand });
 });
 
 const updateBrand = catchError(async (req, res, next) => {
@@ -25,12 +27,15 @@ const updateBrand = catchError(async (req, res, next) => {
   let brand = await Brand.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
+  brand || next(new AppError("Brand not found", 404));
+  !brand || res.status(200).json({ message: "Success", brand });
   res.status(200).json({ message: "Success", brand });
 });
 
 const deleteBrand = catchError(async (req, res, next) => {
   let brand = await Brand.findByIdAndDelete(req.params.id);
-  res.status(200).json({ message: "Success", brand });
+  brand || next(new AppError("Brand not found", 404));
+  !brand || res.status(200).json({ message: "Success", brand });
 });
 
 export { addBrand, allBrands, updateBrand, deleteBrand, getBrand };

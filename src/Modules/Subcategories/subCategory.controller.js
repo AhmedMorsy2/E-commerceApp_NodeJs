@@ -6,17 +6,21 @@ const addSubCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);
   let subCategory = new SubCategory(req.body);
   await subCategory.save();
-  res.status(200).json({ message: "Success", subCategory });
+  res.status(200).json({ message: "Success", subCategories });
 });
 
 const allSubCategories = catchError(async (req, res, next) => {
   let subCategories = await SubCategory.find();
-  res.status(200).json({ message: "Success", subCategories });
+  subCategories.length === 0
+    ? next(new AppError("There is no subCategories", 404))
+    : res.status(200).json({ message: "Success", subCategories });
 });
 
 const getSubCategory = catchError(async (req, res, next) => {
   let subCategory = await SubCategory.findById(req.params.id);
-  res.status(200).json({ message: "Success", subCategory });
+  subCategory ||
+    next(new AppError("There is no subCategory with this ID", 404));
+  !subCategory || res.status(200).json({ message: "Success", subCategory });
 });
 
 const updateSubCategory = catchError(async (req, res, next) => {
@@ -26,12 +30,16 @@ const updateSubCategory = catchError(async (req, res, next) => {
     req.body,
     { new: true }
   );
-  res.status(200).json({ message: "Success", subCategory });
+  subCategory ||
+    next(new AppError("There is no subCategory with this ID", 404));
+  !subCategory || res.status(200).json({ message: "Success", subCategory });
 });
 
 const deleteSubCategory = catchError(async (req, res, next) => {
   let subCategory = await SubCategory.findByIdAndDelete(req.params.id);
-  res.status(200).json({ message: "Success", subCategory });
+  subCategory ||
+    next(new AppError("There is no subCategory with this ID", 404));
+  !subCategory || res.status(200).json({ message: "Success", subCategory });
 });
 
 export {

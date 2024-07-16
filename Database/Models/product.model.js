@@ -4,7 +4,7 @@ const schema = new Schema(
   {
     title: {
       type: String,
-      unique: [true, "name is required"],
+      unique: [true, "name must be unique"],
       required: true,
       trim: true,
       minLength: [2, "too short Product title"],
@@ -23,13 +23,12 @@ const schema = new Schema(
     imgCover: String,
     images: [String],
     price: {
-      type: NUmber,
+      type: Number,
       required: true,
       min: 0,
     },
     priceAfterDiscount: {
       type: Number,
-      required: true,
       min: 0,
     },
     sold: Number,

@@ -6,19 +6,11 @@ import {
   getCategory,
   updateCategory,
 } from "./categories.controller.js";
-import {
-  checkCategoryExist,
-  checkIdExist,
-} from "../../Middlewares/categories.middleware.js";
 
 const categoryRouter = Router();
 
-categoryRouter
-  .route("/")
-  .post(addCategory)
-  .get(checkCategoryExist, allCategories);
+categoryRouter.route("/").post(addCategory).get(allCategories);
 
-categoryRouter.use(checkIdExist);
 categoryRouter
   .route("/:id")
   .get(getCategory)
