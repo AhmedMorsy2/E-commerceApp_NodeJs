@@ -4,9 +4,7 @@ const schema = new Schema(
   {
     title: {
       type: String,
-      unique: [true, "name must be unique"],
       required: true,
-      trim: true,
       minLength: [2, "too short Product title"],
     },
     slug: {

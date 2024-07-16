@@ -7,12 +7,18 @@ import {
   updateCategory,
 } from "./categories.controller.js";
 import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
+import { validations } from "../../utils/validation.js";
+import { addCategoeyValidation } from "./categories.validation.js";
 
 const categoryRouter = Router();
 
 categoryRouter
   .route("/")
-  .post(uploadSingleFile("image", "categories"), addCategory)
+  .post(
+    uploadSingleFile("image", "categories"),
+    validations(addCategoeyValidation),
+    addCategory
+  )
   .get(allCategories);
 
 categoryRouter

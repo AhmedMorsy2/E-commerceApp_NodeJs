@@ -7,12 +7,18 @@ import {
   updateBrand,
 } from "./brands.controller.js";
 import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
+import { validations } from "../../utils/validation.js";
+import { addBrandValidation } from "./brands.validation.js";
 
 const brandRouter = Router();
 
 brandRouter
   .route("/")
-  .post(uploadSingleFile("logo", "brands"), addBrand)
+  .post(
+    uploadSingleFile("logo", "brands"),
+    validations(addBrandValidation),
+    addBrand
+  )
   .get(allBrands);
 
 brandRouter
