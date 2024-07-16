@@ -26,4 +26,8 @@ const schema = new Schema(
   }
 );
 
+schema.post("init", function (doc) {
+  doc.logo = "http://localhost:3000/uploads/brands/" + doc.logo;
+});
+
 export const Brand = model("Brand", schema);

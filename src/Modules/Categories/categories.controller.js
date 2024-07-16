@@ -4,9 +4,10 @@ import { catchError } from "../../utils/catchError.js";
 
 const addCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);
+  req.body.image = req.file.filename;
   let category = new Category(req.body);
   await category.save();
-  res.status(200).json({ message: "Success", categories });
+  res.status(200).json({ message: "Success", category });
 });
 
 const allCategories = catchError(async (req, res, next) => {
@@ -24,6 +25,7 @@ const getCategory = catchError(async (req, res, next) => {
 
 const updateCategory = catchError(async (req, res, next) => {
   req.body.slug = slugify(req.body.name);
+  if (req.file) req.body.image = req.file.filename;
   let category = await Category.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });

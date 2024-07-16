@@ -6,15 +6,19 @@ import {
   getCategory,
   updateCategory,
 } from "./categories.controller.js";
+import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
 
 const categoryRouter = Router();
 
-categoryRouter.route("/").post(addCategory).get(allCategories);
+categoryRouter
+  .route("/")
+  .post(uploadSingleFile("image", "categories"), addCategory)
+  .get(allCategories);
 
 categoryRouter
   .route("/:id")
   .get(getCategory)
-  .put(updateCategory)
+  .put(uploadSingleFile("image", "categories"), updateCategory)
   .delete(deleteCategory);
 
 export default categoryRouter;
