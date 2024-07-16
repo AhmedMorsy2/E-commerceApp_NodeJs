@@ -15,8 +15,8 @@ export const validations = (schema) => {
         dataForValidation.logo = req.file;
       }
     } else if (req.files) {
-      if (req.files.imgCover) {
-        dataForValidation.imgCover = req.files.imgCover[0];
+      if (req.files.imageCover) {
+        dataForValidation.imageCover = req.files.imageCover[0];
       }
       if (req.files.images) {
         dataForValidation.images = req.files.images;

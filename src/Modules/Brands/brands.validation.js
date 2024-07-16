@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const addBrandValidation = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string().min(1).max(50).required(),
   logo: Joi.object({
     fieldname: Joi.string().required(),
     originalname: Joi.string().required(),

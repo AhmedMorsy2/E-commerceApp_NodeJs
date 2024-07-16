@@ -8,6 +8,8 @@ import {
   updateProduct,
 } from "./products.controller.js";
 import { uploadMixOfFiles } from "../../FileUpload/fileUpload.js";
+import { validations } from "../../utils/validation.js";
+import { addProductValidation } from "./productvalidation.js";
 
 const productRouter = Router();
 
@@ -21,6 +23,7 @@ productRouter
       ],
       "products"
     ),
+    validations(addProductValidation),
     addProduct
   )
   .get(allProducts);

@@ -5,7 +5,7 @@ const schema = new Schema(
     title: {
       type: String,
       required: true,
-      minLength: [2, "too short Product title"],
+      minLength: [1, "too short Product title"],
     },
     slug: {
       type: String,
@@ -15,8 +15,6 @@ const schema = new Schema(
     description: {
       type: String,
       required: true,
-      minLength: 30,
-      maxLength: 2000,
     },
     imageCover: String,
     images: [String],
