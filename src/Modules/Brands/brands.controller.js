@@ -25,7 +25,7 @@ const getBrand = catchError(async (req, res, next) => {
 });
 
 const updateBrand = catchError(async (req, res, next) => {
-  req.body.slug = slugify(req.body.name);
+  if (req.bod.slug) req.body.slug = slugify(req.body.name);
   if (req.file) req.body.logo = req.file.filename;
   let brand = await Brand.findByIdAndUpdate(req.params.id, req.body, {
     new: true,

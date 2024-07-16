@@ -20,7 +20,7 @@ const schema = new Schema(
       minLength: 30,
       maxLength: 2000,
     },
-    imgCover: String,
+    imageCover: String,
     images: [String],
     price: {
       type: Number,
@@ -61,7 +61,11 @@ const schema = new Schema(
     versionKey: false,
   }
 );
-
-
+schema.post("init", function (doc) {
+  doc.imageCover = "http://localhost:3000/uploads/products/" + doc.imageCover;
+  doc.images = doc.images.map((img) => {
+    "http://localhost:3000/uploads/products/" + img;
+  });
+});
 
 export const Product = model("Product", schema);
