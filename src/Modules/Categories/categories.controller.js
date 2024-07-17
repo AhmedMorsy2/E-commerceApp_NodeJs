@@ -17,7 +17,9 @@ const allCategories = catchError(async (req, res, next) => {
   let apiFeatures = new ApiFeature(Category.find(), req.query)
     .pagination()
     .sort()
-    .filter();
+    .filter()
+    .fields()
+    .search();
   let categories = await apiFeatures.mongooseQuery;
 
   res.status(200).json({

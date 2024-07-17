@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import { SubCategory } from "../../../Database/Models/subCategory.model.js";
 import { catchError } from "../../utils/catchError.js";
+import { ApiFeature } from "../../utils/ApiFeatures.js";
 
 const addSubCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);
@@ -10,10 +11,22 @@ const addSubCategory = catchError(async (req, res) => {
 });
 
 const allSubCategories = catchError(async (req, res, next) => {
-  let subCategories = await SubCategory.find();
-  subCategories.length === 0
-    ? next(new AppError("There is no subCategories", 404))
-    : res.status(200).json({ message: "Success", subCategories });
+  let apiFeatures = new ApiFeature(SubCategory.find(), req.query)
+    .pagination()
+    .sort()
+    .filter()
+    .fields()
+    .search();
+  let subCategories = await apiFeatures.mongooseQuery;
+  res.status(200).json({
+    message: "success",
+    MetaData: {
+      Page: apiFeatures.pageNumber,
+      limit: apiFeatures.limit,
+      total: subCategories.length,
+    },
+    subCategories,
+  });
 });
 
 const getSubCategory = catchError(async (req, res, next) => {
