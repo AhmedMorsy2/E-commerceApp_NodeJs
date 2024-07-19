@@ -11,7 +11,10 @@ const addSubCategory = catchError(async (req, res) => {
 });
 
 const allSubCategories = catchError(async (req, res, next) => {
-  let apiFeatures = new ApiFeature(SubCategory.find(), req.query)
+  let filter = {};
+  if (req.params.category) filter.category = req.params.category;
+
+  let apiFeatures = new ApiFeature(SubCategory.find(filter), req.query)
     .pagination()
     .sort()
     .filter()

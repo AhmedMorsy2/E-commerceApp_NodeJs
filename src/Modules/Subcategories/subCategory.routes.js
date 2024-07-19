@@ -7,12 +7,9 @@ import {
   updateSubCategory,
 } from "./subCategory.controller.js";
 
-const subCategoryRouter = Router();
+const subCategoryRouter = Router({ mergeParams: true });
 
-subCategoryRouter
-  .route("/")
-  .post(addSubCategory)
-  .get(allSubCategories);
+subCategoryRouter.route("/").post(addSubCategory).get(allSubCategories);
 
 subCategoryRouter
   .route("/:id")

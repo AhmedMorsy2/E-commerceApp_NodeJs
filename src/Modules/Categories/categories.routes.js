@@ -9,8 +9,10 @@ import {
 import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
 import { validations } from "../../utils/validation.js";
 import { addCategoeyValidation } from "./categories.validation.js";
+import subCategoryRouter from "../Subcategories/subCategory.routes.js";
 
 const categoryRouter = Router();
+categoryRouter.use("/:category/suncatedories", subCategoryRouter);
 
 categoryRouter
   .route("/")
