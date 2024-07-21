@@ -1,4 +1,4 @@
-import { AppError } from "./appError.js";
+import { AppError } from "../utils/appError.js";
 import jwt from "jsonwebtoken";
 import { catchError } from "./catchError.js";
 

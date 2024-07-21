@@ -1,4 +1,4 @@
-import { AppError } from "./appError.js";
+import { AppError } from "../utils/appError.js";
 
 export function catchError(callback) {
   return (req, res, next) => {

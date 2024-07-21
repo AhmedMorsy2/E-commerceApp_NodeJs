@@ -1,6 +1,6 @@
 import { ApiFeature } from "../../utils/ApiFeatures.js";
 import { AppError } from "../../utils/appError.js";
-import { catchError } from "../../utils/catchError.js";
+import { catchError } from "../../Middlewares/catchError.js";
 
 const deleteOne = (model) => {
   return catchError(async (req, res, next) => {
