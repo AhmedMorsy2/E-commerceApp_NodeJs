@@ -23,7 +23,7 @@ const signin = catchError(async (req, res, next) => {
 const changeUserPassword = catchError(async (req, res, next) => {
   let user = await User.findOne({ email: req.body.email });
   if (user && bcrypt.compareSync(req.body.oldPassword, user.password)) {
-    await User.findOne(
+    await User.findOneAndUpdate(
       { email: req.body.email },
       { password: req.body.newPassword, passwordChangedAt: Date.now() }
     );
@@ -37,13 +37,15 @@ const protectedRoutes = catchError(async (req, res, next) => {
   let { token } = req.headers;
   let userPayload = null;
   if (!token) return next(new AppError("Token not provided", 401));
+
   jwt.verify(token, "Morsy", (err, payload) => {
     if (err) return next(new AppError(err, 401));
     userPayload = payload;
   });
-  let user = await User.findById(userPayload.useId);
+
+  let user = await User.findById(userPayload.userId);
   if (!user) next(new AppError("User not found", 401));
-  console.log(user);
+
   let time = parseInt(user.passwordChangedAt.getTime() / 1000);
 
   if (time > userPayload.iat)
