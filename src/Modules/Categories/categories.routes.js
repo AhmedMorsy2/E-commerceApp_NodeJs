@@ -7,9 +7,9 @@ import {
   updateCategory,
 } from "./categories.controller.js";
 import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
-import { validations } from "../../utils/validation.js";
 import { addCategoeyValidation } from "./categories.validation.js";
 import subCategoryRouter from "../Subcategories/subCategory.routes.js";
+import { validations } from "../../Middlewares/validation.js";
 
 const categoryRouter = Router();
 categoryRouter.use("/:category/suncatedories", subCategoryRouter);

@@ -1,9 +1,8 @@
 import slugify from "slugify";
-import { catchError } from "../../utils/catchError.js";
 import { Brand } from "../../../Database/Models/brand.model.js";
-import { AppError } from "../../utils/appError.js";
-import { ApiFeature } from "../../utils/ApiFeatures.js";
 import { getAll } from "../handlers/handler.js";
+import { catchError } from "../../Middlewares/catchError.js";
+import { AppError } from "../../utils/appError.js";
 
 const addBrand = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);

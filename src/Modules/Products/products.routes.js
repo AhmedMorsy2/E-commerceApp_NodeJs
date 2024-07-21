@@ -8,8 +8,8 @@ import {
   updateProduct,
 } from "./products.controller.js";
 import { uploadMixOfFiles } from "../../FileUpload/fileUpload.js";
-import { validations } from "../../utils/validation.js";
 import { addProductValidation } from "./productvalidation.js";
+import { validations } from "../../Middlewares/validation.js";
 
 const productRouter = Router();
 

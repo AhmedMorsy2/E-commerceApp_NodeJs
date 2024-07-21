@@ -6,10 +6,11 @@ import {
   getUser,
   updateUser,
 } from "./user.controller.js";
+import { checkEmail } from "../../Middlewares/checkEmail.js";
 
 const userRouter = Router();
 
-userRouter.route("/").post(addUser).get(allUsers);
+userRouter.route("/").post(checkEmail, addUser).get(allUsers);
 
 userRouter.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 

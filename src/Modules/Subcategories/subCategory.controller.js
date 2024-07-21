@@ -1,7 +1,8 @@
 import slugify from "slugify";
 import { SubCategory } from "../../../Database/Models/subCategory.model.js";
-import { catchError } from "../../utils/catchError.js";
 import { ApiFeature } from "../../utils/ApiFeatures.js";
+import { AppError } from "../../utils/appError.js";
+import { catchError } from "../../Middlewares/catchError.js";
 
 const addSubCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);

@@ -7,8 +7,8 @@ import {
   updateBrand,
 } from "./brands.controller.js";
 import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
-import { validations } from "../../utils/validation.js";
 import { addBrandValidation } from "./brands.validation.js";
+import { validations } from "../../Middlewares/validation.js";
 
 const brandRouter = Router();
 

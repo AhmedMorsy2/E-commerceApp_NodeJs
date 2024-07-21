@@ -1,8 +1,8 @@
 import slugify from "slugify";
 import { Category } from "../../../Database/Models/category.model.js";
-import { catchError } from "../../utils/catchError.js";
 import { AppError } from "../../utils/appError.js";
 import { getAll } from "../handlers/handler.js";
+import { catchError } from "../../Middlewares/catchError.js";
 
 const addCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);

@@ -1,12 +1,12 @@
 process.on("uncaughtException", (err) => {
-  console.log({ error: err });
+  return new AppError({ error: err }, 500);
 });
 
 import express from "express";
-import { AppError } from "./src/utils/appError.js";
-import { globalError } from "./src/utils/globalError.js";
 import { db } from "./Database/dbConnection.js";
 import { bootstrap } from "././src/Modules/bootstrap.js";
+import { AppError } from "./src/utils/appError.js";
+import { globalError } from "./src/Middlewares/globalError.js";
 
 const app = express();
 const port = 3000;
@@ -21,6 +21,6 @@ app.use("*", (req, res, next) => {
 });
 app.use(globalError);
 process.on("unhandledRejection", (err) => {
-  console.log({ error: err });
+  return new AppError({ error: err }, 500);
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
