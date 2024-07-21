@@ -10,6 +10,7 @@ import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
 import { addCategoeyValidation } from "./categories.validation.js";
 import subCategoryRouter from "../Subcategories/subCategory.routes.js";
 import { validations } from "../../Middlewares/validation.js";
+import { protectedRoutes } from "../auth/auth.controller.js";
 
 const categoryRouter = Router();
 categoryRouter.use("/:category/suncatedories", subCategoryRouter);
@@ -17,6 +18,7 @@ categoryRouter.use("/:category/suncatedories", subCategoryRouter);
 categoryRouter
   .route("/")
   .post(
+    protectedRoutes,
     uploadSingleFile("image", "categories"),
     validations(addCategoeyValidation),
     addCategory

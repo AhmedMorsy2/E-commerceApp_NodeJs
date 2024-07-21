@@ -27,6 +27,7 @@ const schema = new Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    passwordChangedAt: Date,
   },
   {
     timestamps: true,
