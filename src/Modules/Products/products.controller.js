@@ -3,6 +3,7 @@ import { catchError } from "../../utils/catchError.js";
 import { Product } from "../../../Database/Models/product.model.js";
 import { AppError } from "../../utils/appError.js";
 import { ApiFeature } from "../../utils/ApiFeatures.js";
+import { getAll } from "../handlers/handler.js";
 
 const addProduct = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.title);
@@ -15,25 +16,7 @@ const addProduct = catchError(async (req, res) => {
   res.status(200).json({ message: "Success", product });
 });
 
-const allProducts = catchError(async (req, res, next) => {
-  let apiFeatures = new ApiFeature(Product.find(), req.query)
-    .pagination()
-    .sort()
-    .filter()
-    .fields()
-    .search();
-  let products = await apiFeatures.mongooseQuery;
-
-  res.status(200).json({
-    message: "success",
-    MetaData: {
-      Page: apiFeatures.pageNumber,
-      limit: apiFeatures.limit,
-      total: products.length,
-    },
-    products,
-  });
-});
+const allProducts = getAll(Product);
 
 const getProduct = catchError(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
