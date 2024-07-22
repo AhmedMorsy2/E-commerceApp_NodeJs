@@ -4,9 +4,10 @@ import { catchError } from "../../Middlewares/catchError.js";
 import { AppError } from "../../utils/appError.js";
 import { Review } from "../../../Database/Models/review.model.js";
 
-const addReview = catchError(async (req, res) => {
+const addReview = catchError(async (req, res, next) => {
   req.body.user = req.user._id;
-
+  let isExist = await Review.findOne({ user: req.user._id });
+  if (isExist) return next(new AppError("You already have a review", 401));
   let review = new Review(req.body);
   await review.save();
   res.status(200).json({ message: "Success", review });
