@@ -6,7 +6,6 @@ const schema = new Schema(
     user: {
       type: Types.ObjectId,
       ref: "User",
-      required: true,
     },
     product: {
       type: Types.ObjectId,
@@ -17,7 +16,6 @@ const schema = new Schema(
       type: Number,
       min: 0,
       max: 5,
-      required: true,
     },
   },
   {

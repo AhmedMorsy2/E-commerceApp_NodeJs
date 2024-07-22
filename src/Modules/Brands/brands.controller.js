@@ -28,7 +28,6 @@ const updateBrand = catchError(async (req, res, next) => {
   });
   brand || next(new AppError("Brand not found", 404));
   !brand || res.status(200).json({ message: "Success", brand });
-  res.status(200).json({ message: "Success", brand });
 });
 
 const deleteBrand = catchError(async (req, res, next) => {

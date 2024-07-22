@@ -31,8 +31,6 @@ const updateProduct = catchError(async (req, res, next) => {
 
   product || next(new AppError("Product not found", 404));
   !product || res.status(200).json({ message: "Success", product });
-
-  res.status(200).json({ message: "Success", product });
 });
 
 const deleteProduct = catchError(async (req, res, next) => {
