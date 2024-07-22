@@ -7,14 +7,20 @@ import bcrypt from "bcrypt";
 const signup = catchError(async (req, res) => {
   let user = new User(req.body);
   await user.save();
-  let token = jwt.sign({ userId: user._id, role: user.role }, "Morsy");
+  let token = jwt.sign(
+    { userId: user._id, role: user.role },
+    process.env.JWT_KEY
+  );
   res.status(200).json({ message: "success", token });
 });
 
 const signin = catchError(async (req, res, next) => {
   let user = await User.findOne({ email: req.body.email });
   if (user && bcrypt.compareSync(req.body.password, user.password)) {
-    let token = jwt.sign({ userId: user._id, role: user.role }, "Morsy");
+    let token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_KEY
+    );
     return res.status(200).json({ message: "success", token });
   }
   next(new AppError("Incorrect email or password", 401));
@@ -27,7 +33,10 @@ const changeUserPassword = catchError(async (req, res, next) => {
       { email: req.body.email },
       { password: req.body.newPassword, passwordChangedAt: Date.now() }
     );
-    let token = jwt.sign({ userId: user._id, role: user.role }, "Morsy");
+    let token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_KEY
+    );
     return res.status(200).json({ message: "success", token });
   }
   next(new AppError("Incorrect old password", 401));
@@ -38,7 +47,7 @@ const protectedRoutes = catchError(async (req, res, next) => {
   let userPayload = null;
   if (!token) return next(new AppError("Token not provided", 401));
 
-  jwt.verify(token, "Morsy", (err, payload) => {
+  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
     if (err) return next(new AppError(err, 401));
     userPayload = payload;
   });

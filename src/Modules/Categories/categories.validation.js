@@ -7,7 +7,7 @@ const addCategoeyValidation = Joi.object({
     originalname: Joi.string().required(),
     encoding: Joi.string().required(),
     mimetype: Joi.string()
-      .valid("image/jpeg ", "image/png", "image/gif", "image/jpg")
+      // .valid("image/jpeg ", "image/png", "image/gif", "image/jpg")
       .required(),
     size: Joi.number().max(5242880).required(),
     destination: Joi.string().required(),

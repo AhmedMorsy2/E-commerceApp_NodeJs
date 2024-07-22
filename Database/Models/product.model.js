@@ -57,13 +57,10 @@ const schema = new Schema(
     versionKey: false,
   }
 );
+
 schema.post("init", function (doc) {
-  if (doc.imageCover)
-    doc.imageCover = "http://localhost:3000/uploads/products/" + doc.imageCover;
-  if (doc.images)
-    doc.images = doc.images.map((img) => {
-      "http://localhost:3000/uploads/products/" + img;
-    });
+  if (doc.imageCover) doc.imageCover = process.env.BASE_URL + "products/" + doc.imageCover;
+  if (doc.images) doc.images = doc.images.map(img => process.env.BASE_URL + "products/" + img);
 });
 
 export const Product = model("Product", schema);

@@ -8,6 +8,7 @@ import { bootstrap } from "././src/Modules/bootstrap.js";
 import { AppError } from "./src/utils/appError.js";
 import { globalError } from "./src/Middlewares/globalError.js";
 
+import "dotenv/config";
 const app = express();
 const port = 3000;
 app.use(express.json());

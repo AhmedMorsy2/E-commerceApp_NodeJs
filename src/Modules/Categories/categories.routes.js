@@ -19,7 +19,7 @@ categoryRouter
   .route("/")
   .post(
     protectedRoutes,
-    allowedTo("admin"),
+    allowedTo("admin", "user"),
     uploadSingleFile("image", "categories"),
     validations(addCategoeyValidation),
     addCategory
