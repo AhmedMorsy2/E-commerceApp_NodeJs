@@ -34,13 +34,13 @@ const schema = new Schema(
         city: String,
         phone: String,
         street: String,
-        postalCode: Number,
       },
     ],
   },
   {
     timestamps: true,
     versionKey: false,
+    id: false,
   }
 );
 

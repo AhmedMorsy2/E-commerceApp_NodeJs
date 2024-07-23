@@ -1,3 +1,4 @@
+import addressRouter from "./Addresses/address.routes.js";
 import authRouter from "./auth/auth.routes.js";
 import brandRouter from "./Brands/brands.routes.js";
 import categoryRouter from "./Categories/categories.routes.js";
@@ -16,5 +17,6 @@ export const bootstrap = (app) => {
   app.use("/api/auth", authRouter);
   app.use("/api/reviews", reviewRouter);
   app.use("/api/wishlists", wishlistRouter);
+  app.use("/api/addresses", addressRouter);
   // app.use("/api/carts", cartRouter);
 };
