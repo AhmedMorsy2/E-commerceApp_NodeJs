@@ -25,7 +25,9 @@ const getReview = catchError(async (req, res, next) => {
 
 const updateReview = catchError(async (req, res, next) => {
   let review = await Review.findOneAndUpdate(
-    { _id: req.params.id, user: req.user._id },req.body,{new: true,}
+    { _id: req.params.id, user: req.user._id },
+    req.body,
+    { new: true }
   );
   review ||
     next(new AppError("Review not found or You not created review", 404));

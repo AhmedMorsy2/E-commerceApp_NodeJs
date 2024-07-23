@@ -24,4 +24,9 @@ const schema = new Schema(
   }
 );
 
+// schema.pre(/^find/, function () {
+//   this.populate("user", "name");
+//   this.populate("product");
+// });
+
 export const Review = model("Review", schema);

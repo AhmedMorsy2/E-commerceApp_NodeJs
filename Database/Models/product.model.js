@@ -55,12 +55,27 @@ const schema = new Schema(
   {
     timestamps: true,
     versionKey: false,
+    toJSON: { virtuals: true },
   }
 );
 
+schema.virtual("Reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "product",
+});
+
+schema.pre(/^find/, function () {
+  this.populate("Reviews");
+});
+
 schema.post("init", function (doc) {
-  if (doc.imageCover) doc.imageCover = process.env.BASE_URL + "products/" + doc.imageCover;
-  if (doc.images) doc.images = doc.images.map(img => process.env.BASE_URL + "products/" + img);
+  if (doc.imageCover)
+    doc.imageCover = process.env.BASE_URL + "products/" + doc.imageCover;
+  if (doc.images)
+    doc.images = doc.images.map(
+      (img) => process.env.BASE_URL + "products/" + img
+    );
 });
 
 export const Product = model("Product", schema);
