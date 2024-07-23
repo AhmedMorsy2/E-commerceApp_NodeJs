@@ -1,6 +1,6 @@
 import slugify from "slugify";
 import { Brand } from "../../../Database/Models/brand.model.js";
-import { getAll } from "../handlers/handler.js";
+import { deleteOne, getAll } from "../handlers/handler.js";
 import { catchError } from "../../Middlewares/catchError.js";
 import { AppError } from "../../utils/appError.js";
 
@@ -30,10 +30,6 @@ const updateBrand = catchError(async (req, res, next) => {
   !brand || res.status(200).json({ message: "Success", brand });
 });
 
-const deleteBrand = catchError(async (req, res, next) => {
-  let brand = await Brand.findByIdAndDelete(req.params.id);
-  brand || next(new AppError("Brand not found", 404));
-  !brand || res.status(200).json({ message: "Success", brand });
-});
+const deleteBrand = deleteOne(Brand);
 
 export { addBrand, allBrands, updateBrand, deleteBrand, getBrand };

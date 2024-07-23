@@ -1,7 +1,7 @@
 import { Review } from "../../../Database/Models/review.model.js";
 import { catchError } from "../../Middlewares/catchError.js";
 import { AppError } from "../../utils/appError.js";
-import { getAll } from "../handlers/handler.js";
+import { deleteOne, getAll } from "../handlers/handler.js";
 
 const addReview = catchError(async (req, res, next) => {
   req.body.user = req.user._id;
@@ -34,10 +34,6 @@ const updateReview = catchError(async (req, res, next) => {
   !review || res.status(200).json({ message: "Success", review });
 });
 
-const deleteReview = catchError(async (req, res, next) => {
-  let review = await Review.findByIdAndDelete(req.params.id);
-  review || next(new AppError("Review not found", 404));
-  !review || res.status(200).json({ message: "Success", review });
-});
+const deleteReview = deleteOne(Review);
 
 export { addReview, allReviews, deleteReview, getReview, updateReview };

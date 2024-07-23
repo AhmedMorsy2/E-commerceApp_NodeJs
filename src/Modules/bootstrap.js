@@ -5,6 +5,7 @@ import productRouter from "./Products/products.routes.js";
 import reviewRouter from "./Review/review.routes.js";
 import subCategoryRouter from "./Subcategories/subCategory.routes.js";
 import userRouter from "./Users/user.routes.js";
+import wishlistRouter from "./Wishlist/wishlist.routes.js";
 
 export const bootstrap = (app) => {
   app.use("/api/categories", categoryRouter);
@@ -14,5 +15,6 @@ export const bootstrap = (app) => {
   app.use("/api/users", userRouter);
   app.use("/api/auth", authRouter);
   app.use("/api/reviews", reviewRouter);
+  app.use("/api/wishlists", wishlistRouter);
   // app.use("/api/carts", cartRouter);
 };

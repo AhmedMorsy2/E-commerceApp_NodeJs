@@ -56,6 +56,7 @@ const schema = new Schema(
     timestamps: true,
     versionKey: false,
     toJSON: { virtuals: true },
+    id: false,
   }
 );
 

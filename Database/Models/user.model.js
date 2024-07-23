@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 import bcrypt from "bcrypt";
 const schema = new Schema(
   {
@@ -28,6 +28,15 @@ const schema = new Schema(
       default: "user",
     },
     passwordChangedAt: Date,
+    wishList: [{ type: Types.ObjectId, ref: "Product" }],
+    addresses: [
+      {
+        city: String,
+        phone: String,
+        street: String,
+        postalCode: Number,
+      },
+    ],
   },
   {
     timestamps: true,
