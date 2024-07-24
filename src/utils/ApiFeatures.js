@@ -49,9 +49,11 @@ export class ApiFeature {
     if (this.searchQuery.search) {
       this.mongooseQuery.find({
         $or: [
-          { title: { $regex: this.searchQuery.search, $option: "i" } },
+          { title: { $regex: this.searchQuery.search, $options: "i" } },
+          { name: { $regex: this.searchQuery.search, $options: "i" } },
+
           {
-            description: { $regex: this.searchQuery.search, $option: "i" },
+            description: { $regex: this.searchQuery.search, $options: "i" },
           },
         ],
       });
