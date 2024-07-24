@@ -1,6 +1,6 @@
 import slugify from "slugify";
 import { Product } from "../../../Database/Models/product.model.js";
-import { deleteOne, getAll } from "../handlers/handler.js";
+import { deleteOne, getAll, getOne } from "../handlers/handler.js";
 import { catchError } from "../../Middlewares/catchError.js";
 import { AppError } from "../../utils/appError.js";
 
@@ -15,11 +15,7 @@ const addProduct = catchError(async (req, res) => {
 
 const allProducts = getAll(Product);
 
-const getProduct = catchError(async (req, res, next) => {
-  let product = await Product.findById(req.params.id);
-  product || next(new AppError("Product not found", 404));
-  !product || res.status(200).json({ message: "Success", product });
-});
+const getProduct = getOne(Product);
 
 const updateProduct = catchError(async (req, res, next) => {
   req.body.slug = slugify(req.body.title);
