@@ -55,10 +55,17 @@ const protectedRoutes = catchError(async (req, res, next) => {
   let user = await User.findById(userPayload.userId);
   if (!user) next(new AppError("User not found", 401));
 
-  let time = parseInt(user.passwordChangedAt.getTime() / 1000);
+  if (user.passwordChangedAt && user.passwordChangedAt instanceof Date) {
+    let time = parseInt(user.passwordChangedAt.getTime() / 1000);
 
-  if (time > userPayload.iat)
-    return next(new AppError("Invalid token ... login again ", 401));
+    if (time > userPayload.iat) {
+      return next(new AppError("Invalid token ... login again", 401));
+    }
+  }
+  //  let time = parseInt(user.passwordChangedAt.getTime() / 1000);
+
+  // if (time > userPayload.iat)
+  //   return next(new AppError("Invalid token ... login again ", 401));
 
   req.user = user;
   next();
