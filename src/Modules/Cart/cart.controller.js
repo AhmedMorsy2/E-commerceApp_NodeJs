@@ -80,7 +80,7 @@ const getLoggedUserCart = catchError(async (req, res, next) => {
   res.status(200).json({ message: "Success", cart });
 });
 
-const deleteLoggedUserCart = catchError(async (req, res, next) => {
+const clearUserCart = catchError(async (req, res, next) => {
   let cart = await Cart.findOneAndDelete({ user: req.user._id });
   cart || next(new AppError("There is no cart"));
   !cart || res.status(200).json({ message: "Success", cart });
@@ -101,7 +101,7 @@ const applyCoupon = catchError(async (req, res, next) => {
 export {
   addToCart,
   applyCoupon,
-  deleteLoggedUserCart,
+  clearUserCart,
   getLoggedUserCart,
   removeCartItem,
   updateQuantity,
