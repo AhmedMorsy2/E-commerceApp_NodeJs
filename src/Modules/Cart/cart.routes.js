@@ -3,7 +3,7 @@ import { allowedTo, protectedRoutes } from "../auth/auth.controller.js";
 import {
   addToCart,
   applyCoupon,
-  deleteLoggedUserCart,
+  clearUserCart,
   getLoggedUserCart,
   removeCartItem,
   updateQuantity,
@@ -15,13 +15,12 @@ cartRouter
   .route("/")
   .post(protectedRoutes, allowedTo("user"), addToCart)
   .get(protectedRoutes, allowedTo("user"), getLoggedUserCart)
-  .delete(protectedRoutes, allowedTo("user"), deleteLoggedUserCart);
+  .delete(protectedRoutes, allowedTo("user"), clearUserCart);
 
 cartRouter
   .route("/:id")
   .put(protectedRoutes, allowedTo("user"), updateQuantity)
   .delete(protectedRoutes, allowedTo("user"), removeCartItem);
-  
 
 cartRouter.post(
   "/apply-coupon",

@@ -9,7 +9,7 @@ const addSubCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);
   let subCategory = new SubCategory(req.body);
   await subCategory.save();
-  res.status(200).json({ message: "Success", subCategories });
+  res.status(200).json({ message: "Success", subCategory });
 });
 
 const allSubCategories = catchError(async (req, res, next) => {
