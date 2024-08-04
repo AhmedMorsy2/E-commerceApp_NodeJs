@@ -77,6 +77,7 @@ const getLoggedUserCart = catchError(async (req, res, next) => {
     "cartItems.product",
     "title imageCover images price"
   );
+  if (!cart) return next(new AppError("There is no cart", 404));
   res.status(200).json({ message: "Success", cart });
 });
 

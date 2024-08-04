@@ -4,6 +4,7 @@ import brandRouter from "./Brands/brands.routes.js";
 import cartRouter from "./Cart/cart.routes.js";
 import categoryRouter from "./Categories/categories.routes.js";
 import couponRouter from "./Coupon/coupon.routes.js";
+import orderRouter from "./Order/order.routes.js";
 import productRouter from "./Products/products.routes.js";
 import reviewRouter from "./Review/review.routes.js";
 import subCategoryRouter from "./Subcategories/subCategory.routes.js";
@@ -22,4 +23,5 @@ export const bootstrap = (app) => {
   app.use("/api/addresses", addressRouter);
   app.use("/api/coupons", couponRouter);
   app.use("/api/carts", cartRouter);
+  app.use("/api/orders", orderRouter);
 };

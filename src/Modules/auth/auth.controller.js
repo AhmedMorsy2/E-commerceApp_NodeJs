@@ -27,12 +27,12 @@ const signin = catchError(async (req, res, next) => {
 });
 
 const changeUserPassword = catchError(async (req, res, next) => {
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findById(req.user._id);
   if (user && bcrypt.compareSync(req.body.oldPassword, user.password)) {
-    await User.findOneAndUpdate(
-      { email: req.body.email },
-      { password: req.body.newPassword, passwordChangedAt: Date.now() }
-    );
+    await User.findByIdAndUpdate(req.user._id, {
+      password: req.body.newPassword,
+      passwordChangedAt: Date.now(),
+    });
     let token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_KEY
@@ -62,11 +62,6 @@ const protectedRoutes = catchError(async (req, res, next) => {
       return next(new AppError("Invalid token ... login again", 401));
     }
   }
-  //  let time = parseInt(user.passwordChangedAt.getTime() / 1000);
-
-  // if (time > userPayload.iat)
-  //   return next(new AppError("Invalid token ... login again ", 401));
-
   req.user = user;
   next();
 });
