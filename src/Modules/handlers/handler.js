@@ -1,7 +1,6 @@
+import { catchError } from "../../Middlewares/catchError.js";
 import { ApiFeature } from "../../utils/ApiFeatures.js";
 import { AppError } from "../../utils/appError.js";
-import { catchError } from "../../Middlewares/catchError.js";
-
 const deleteOne = (model) => {
   return catchError(async (req, res, next) => {
     let document = await model.findByIdAndDelete(req.params.id);
@@ -40,4 +39,4 @@ const getAll = (model) => {
   });
 };
 
-export { deleteOne, getOne, getAll };
+export { deleteOne, getAll, getOne };
