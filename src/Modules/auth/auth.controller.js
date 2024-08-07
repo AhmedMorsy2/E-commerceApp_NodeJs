@@ -8,7 +8,7 @@ const signup = catchError(async (req, res) => {
   let user = new User(req.body);
   await user.save();
   let token = jwt.sign(
-    { userId: user._id, role: user.role },
+    { userId: user._id, role: user.role, name: user.name, email: user.email },
     process.env.JWT_KEY
   );
   res.status(200).json({ message: "success", token });
@@ -18,7 +18,7 @@ const signin = catchError(async (req, res, next) => {
   let user = await User.findOne({ email: req.body.email });
   if (user && bcrypt.compareSync(req.body.password, user.password)) {
     let token = jwt.sign(
-      { userId: user._id, role: user.role },
+      { userId: user._id, role: user.role, name: user.name, email: user.email },
       process.env.JWT_KEY
     );
     return res.status(200).json({ message: "success", token });
@@ -34,7 +34,7 @@ const changeUserPassword = catchError(async (req, res, next) => {
       passwordChangedAt: Date.now(),
     });
     let token = jwt.sign(
-      { userId: user._id, role: user.role },
+      { userId: user._id, role: user.role, name: user.name, email: user.email },
       process.env.JWT_KEY
     );
     return res.status(200).json({ message: "success", token });

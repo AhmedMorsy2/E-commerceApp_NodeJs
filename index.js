@@ -1,5 +1,5 @@
 process.on("uncaughtException", (err) => {
-  return new AppError({ error: err }, 500);
+  console.log({ message: "error", error: err, code: 500 });
 });
 
 import express from "express";
@@ -22,6 +22,6 @@ app.use("*", (req, res, next) => {
 });
 app.use(globalError);
 process.on("unhandledRejection", (err) => {
-  return new AppError({ error: err }, 500);
+  console.log({ message: "error", error: err, code: 500 });
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
