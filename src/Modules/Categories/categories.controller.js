@@ -20,7 +20,9 @@ const updateCategory = catchError(async (req, res, next) => {
   req.body.slug = slugify(req.body.name);
   if (req.file) {
     let existCtegory = await Category.findById(req.params.id);
-    let parts = existCtegory.image.split("http://localhost:3000/");
+    let parts = existCtegory.image.split(
+      `${req.protocol}://${req.get("host")}/`
+    );
     const imageName = parts[parts.length - 1];
     fs.unlinkSync(imageName);
     req.body.image = req.file.filename;

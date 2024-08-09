@@ -22,7 +22,7 @@ const updateBrand = catchError(async (req, res, next) => {
   if (req.file) {
     let brand = await Brand.findById(req.params.id);
     if (!brand) return next(new AppError("Brand not found", 404));
-    let parts = brand.logo.split("http://localhost:3000/");
+    let parts = brand.logo.split(`${req.protocol}://${req.get("host")}/`);
     const imageName = parts[parts.length - 1];
     fs.unlinkSync(imageName);
     req.body.logo = req.file.filename;
