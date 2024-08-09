@@ -50,6 +50,25 @@ const updateProduct = catchError(async (req, res, next) => {
   !product || res.status(200).json({ message: "Success", product });
 });
 
-const deleteProduct = deleteOne(Product);
+const deleteProduct = catchError(async (req, res, next) => {
+  let product = await Product.findById(req.params.id);
+  if (!product) return next(new AppError("Product not found", 404));
+
+  let partsCover = product.imageCover.split(
+    `${req.protocol}://${req.get("host")}/`
+  );
+  const imageCoverName = partsCover[partsCover.length - 1];
+  fs.unlinkSync(imageCoverName);
+
+  product.images.forEach((img) => {
+    let partsImage = img.split(`${req.protocol}://${req.get("host")}/`);
+    const imageName = partsImage[partsImage.length - 1];
+    fs.unlinkSync(imageName);
+  });
+
+  await Product.findByIdAndDelete(req.params.id);
+  product || next(new AppError("Product not found", 404));
+  !product || res.status(200).json({ message: "Success", product });
+});
 
 export { addProduct, allProducts, updateProduct, deleteProduct, getProduct };
