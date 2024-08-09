@@ -34,6 +34,14 @@ const updateBrand = catchError(async (req, res, next) => {
   !brand || res.status(200).json({ message: "Success", brand });
 });
 
-const deleteBrand = deleteOne(Brand);
+const deleteBrand = catchError(async (req, res, next) => {
+  let brand = await Brand.findById(req.params.id);
+  if (!brand) return next(new AppError("Brand not found", 404));
+  let parts = brand.logo.split(`${req.protocol}://${req.get("host")}/`);
+  const imageName = parts[parts.length - 1];
+  fs.unlinkSync(imageName);
+  await Brand.findByIdAndDelete(req.params.id);
+  res.status(200).json({ message: "success", brand });
+});
 
 export { addBrand, allBrands, updateBrand, deleteBrand, getBrand };

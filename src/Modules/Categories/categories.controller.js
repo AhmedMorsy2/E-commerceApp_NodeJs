@@ -34,7 +34,15 @@ const updateCategory = catchError(async (req, res, next) => {
   !category || res.status(200).json({ message: "success", category });
 });
 
-const deleteCategory = deleteOne(Category);
+const deleteCategory = catchError(async (req, res, next) => {
+  let category = await Category.findById(req.params.id);
+  if (!category) return next(new AppError("category not found", 404));
+  let parts = category.image.split(`${req.protocol}://${req.get("host")}/`);
+  const imageName = parts[parts.length - 1];
+  fs.unlinkSync(imageName);
+  await Category.findByIdAndDelete(req.params.id);
+  res.status(200).json({ message: "success", category });
+});
 
 export {
   addCategory,

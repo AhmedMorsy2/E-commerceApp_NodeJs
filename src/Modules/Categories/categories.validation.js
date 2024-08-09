@@ -13,7 +13,8 @@ const addCategoeyValidation = Joi.object({
     destination: Joi.string().required(),
     filename: Joi.string().required(),
     path: Joi.string().required(),
-  }).required(),
+  }),
+  // .required(),
 });
 
 export { addCategoeyValidation };
