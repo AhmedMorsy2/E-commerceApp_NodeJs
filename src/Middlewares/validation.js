@@ -14,11 +14,13 @@ export const validations = (schema) => {
       } else if (req.file.fieldname === "logo") {
         dataForValidation.logo = req.file;
       }
-    } else if (req.files && req.file) {
+    } else if (req.files) {
       if (req.files.imageCover) {
         dataForValidation.imageCover = req.files.imageCover[0];
-      }
-      if (req.files.images) {
+      } else if (req.files.imageCover && req.files.images) {
+        dataForValidation.imageCover = req.files.imageCover[0];
+        dataForValidation.images = req.files.images;
+      } else if (req.files.images) {
         dataForValidation.images = req.files.images;
       }
     }
