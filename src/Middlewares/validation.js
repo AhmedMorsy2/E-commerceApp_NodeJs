@@ -15,11 +15,11 @@ export const validations = (schema) => {
         dataForValidation.logo = req.file;
       }
     } else if (req.files) {
-      if (req.files.imageCover) {
-        dataForValidation.imageCover = req.files.imageCover[0];
-      } else if (req.files.imageCover && req.files.images) {
+      if (req.files.imageCover && req.files.images) {
         dataForValidation.imageCover = req.files.imageCover[0];
         dataForValidation.images = req.files.images;
+      } else if (req.files.imageCover) {
+        dataForValidation.imageCover = req.files.imageCover[0];
       } else if (req.files.images) {
         dataForValidation.images = req.files.images;
       }
